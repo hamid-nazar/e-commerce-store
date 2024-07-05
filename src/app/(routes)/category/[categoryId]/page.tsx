@@ -5,6 +5,7 @@ import getSizes from '@/actions/GetSizes';
 import { Billboard } from '@/components/Billboard';
 import { Filter } from '@/components/Filter';
 import { Info } from '@/components/Info';
+import { MobileFilters } from '@/components/MobileFilters';
 import { ProductCard } from '@/components/ProductCard';
 import { Container } from '@/components/ui/Container';
 import { NoResults } from '@/components/ui/NoResults';
@@ -42,6 +43,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <div className='px-4 sm:px-6 lg:px-8 pb-24'>
 
           <div className='lg:grid lg:grid-cols-5 lg:gap-x-8'>
+            <MobileFilters sizes={sizes} colors={colors}/>
             <div className='hidden lg:block'>
               <Filter
                valueKey={'sizeId'} 

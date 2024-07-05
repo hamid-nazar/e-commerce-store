@@ -1,21 +1,41 @@
 "use client"
-import React from 'react'
+import React, { MouseEvent, MouseEventHandler } from 'react'
 import Image from 'next/image'
 import { Product } from '@/types'
 import { IconButton } from './ui/IconButton'
 import { Expand, ShoppingCart } from 'lucide-react'
 import { Currency } from './ui/Currency'
 import { useRouter } from 'next/navigation'
+import usePreviewModal from '@/hooks/usePreviewModal'
+import useCart from '@/hooks/useCart'
 
 interface ProductCardProps {
     product: Product
 }
 export function ProductCard({product}: ProductCardProps) {
-
+    
     const router = useRouter();
+
+    const previewModal = usePreviewModal();
+    const {isOpen, onOpen, onClose} = previewModal;
+    
+    const cart = useCart();
+    const { items, add, remove, removeAll } = cart;
+
 
     function handleClick() {
         router.push(`/product/${product?.id}`)
+    }
+
+    function onPreview(event: MouseEvent<HTMLButtonElement>) {
+        event.stopPropagation();
+
+        onOpen(product);
+    }
+
+    function onAddToCart(event: MouseEvent<HTMLButtonElement>) {
+        event.stopPropagation();
+        add(product);
     }
 
   return (
@@ -34,11 +54,11 @@ export function ProductCard({product}: ProductCardProps) {
                 <div className='flex justify-center gap-x-6'>
 
                     <IconButton 
-                    onClick={() => {}}
+                    onClick={onPreview}
                     icon={<Expand size={20} className='text-gray-600'/>}/>
 
                     <IconButton 
-                    onClick={() => {}}
+                    onClick={onAddToCart}
                     icon={<ShoppingCart size={20} className='text-gray-600'/>}/>
 
                 </div>
@@ -54,6 +74,7 @@ export function ProductCard({product}: ProductCardProps) {
             </p>
         </div>
         {/* Price */}
+
         <div className='flex items-center justify-between'>
             <Currency value={product.price} />
         </div>
