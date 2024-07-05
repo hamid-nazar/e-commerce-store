@@ -35,7 +35,7 @@ export function Summary() {
 
         } catch (error: any) {
 
-            toast("Something went wrong")
+            toast.error("Something went wrong")
         }
        
     }
@@ -69,6 +69,7 @@ export function Summary() {
 
         </div>
         <Button 
+        disabled={items.length === 0}
         onClick={checkout}
         className='w-full mt-6'>
             Checkout
